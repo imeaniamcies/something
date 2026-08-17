@@ -1,0 +1,27 @@
+name: Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        required: true
+      time:
+        default: '60'
+      threads:
+        default: '100'
+      rate:
+        default: '0'
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Make executable
+        run: chmod +x h2
+
+      - name: Run
+        run: ./h2 GET ${{ inputs.target }} ${{ inputs.time }} ${{ inputs.threads }} ${{ inputs.rate }} direct --full --debug
